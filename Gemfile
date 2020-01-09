@@ -3,8 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.1'
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
+# Use dotenv to securely store API keys
+gem 'dotenv-rails', groups: [:development, :test]
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -40,5 +43,15 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# Use Active Model Serializers for JSON generation
+# Use Optimized JSON (Oj) to parse and generate JSON text
+gem 'oj'
+
+# Use to serialize data displayed for Rails API
 gem 'active_model_serializers', '~> 0.10.0'
+
+# Use News API for real-time news articles and headlines
+gem 'news-api'
+
+# # Use RestClient to make external API requests
+# gem 'rest-client'
+

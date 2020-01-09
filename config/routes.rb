@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'news/:query', to 'application#news'
   resources :apis
   resources :commands
   resources :users

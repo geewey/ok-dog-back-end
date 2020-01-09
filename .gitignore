@@ -20,4 +20,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-/config/apis
+
+# Ignore env file.
+.env
