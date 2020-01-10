@@ -9,10 +9,10 @@ require 'dotenv'
 Dotenv.load('.env')
 
 
-apiKey = ENV['NEWS_API_KEY']
+news_api_key = ENV['NEWS_API_KEY']
 
 # OPTION 1
-n = News.new(apiKey)
+n = News.new(news_api_key)
 
 # Sources
 return n.get_sources(country: 'us', language: 'en')
@@ -37,7 +37,7 @@ return n.get_sources(country: 'us', language: 'en')
 # require 'open-uri'
 # url = 'https://newsapi.org/v2/top-headlines?'\
 #       'country=us&'\
-#       "apiKey=#{apiKey}"
+#       "apiKey=#{news_api_key}"
 # req = open(url)
 # response_body = req.read
 # puts response_body

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get 'news/:query', to 'application#news'
+  # get 'news/:query', to: 'application#news'
+  get 'news', to: 'application#news'
+  get 'joke', to: 'application#joke'
+  get 'weather', to: 'application#weather'
   resources :apis
   resources :commands
   resources :users
