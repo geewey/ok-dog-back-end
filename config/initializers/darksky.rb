@@ -1,0 +1,1 @@
+DarkskyWeather::Api.configure{|c| c.api_key = ENV["DARKSKY_API_KEY"] }

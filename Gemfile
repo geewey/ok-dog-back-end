@@ -46,12 +46,20 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Use Optimized JSON (Oj) to parse and generate JSON text
 gem 'oj'
 
+# Use JSON gem to parse and generate JSON text
+gem 'json'
+
 # Use to serialize data displayed for Rails API
 gem 'active_model_serializers', '~> 0.10.0'
 
 # Use News API for real-time news articles and headlines
 gem 'news-api'
 
+# Use DarkSky API for real-time weather updates
+gem 'darksky_weather-api'
+
 # # Use RestClient to make external API requests
 # gem 'rest-client'
 
+# # Use Pusher as chatbot client
+# gem 'pusher'
