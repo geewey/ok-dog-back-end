@@ -1,3 +1,5 @@
+# For future refactoring
+
 # News API Ruby client library
 require 'news-api'
 

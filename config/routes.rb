@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   get 'news', to: 'application#news'
   get 'joke', to: 'application#joke'
   get 'weather', to: 'application#weather'
+  get 'error', to: 'application#error'
+  # get 'google_dialogflow', to: 'application#google_dialogflow'
+  get 'wit', to: 'application#wit'
   resources :apis
   resources :commands
   resources :users

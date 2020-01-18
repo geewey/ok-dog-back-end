@@ -2,8 +2,50 @@ class ApplicationController < ActionController::API
 
     require 'news-api'
     require 'open-uri'
+    # require "google/cloud/dialogflow"
+    # require 'wit'
 
-    # Snippet for parsing queries when passing params
+    
+    def wit
+        # fetch from API
+        # q = encodeURIComponent('What is 2 + 2?');
+        # uri = 'https://api.wit.ai/message?q=' + q;
+        # auth = 'Bearer ' + ENV["WIT_API_TOKEN"];
+
+        # fetch(uri, {headers: {Authorization: auth}})
+        #     .then(res => res.json())
+        # ERROR HERE
+        #     .then(res => {render_to_page = res});
+        
+        Wit.init
+
+
+        # resp = Wit.text_query('Hello!', ENV["WIT_API_TOKEN"])
+        resp = Wit.text_query('Hello!', NEP4G6G73FDM7ZXN4QLSRZISSAPKMNO2)
+        # p "Response: " + resp
+
+        Wit.close
+
+        # render json: render_to_page.to_json()
+        render json: resp.to_json()
+    end
+
+    # def google_dialogflow
+    #     dialogflow_project = ENV["DIALOGFLOW_PROJECT"]
+    #     dialogflow_credentials = ENV["DIALOGFLOW_CREDENTIALS"]
+        
+    #     client = Google::Cloud::Dialogflow::Agents.new
+        
+    #     render json: dialogflow_project.to_json()
+    # end
+
+
+    def error
+        error_response = {error: "Sorry, I don't understand. Please try again."}
+        render json: error_response
+    end
+
+    ### Snippet for parsing queries when passing params
 
     # query = params[:query].gsub('"', '')
     # location = query.split('_')[0]
@@ -17,7 +59,8 @@ class ApplicationController < ActionController::API
         
         n = News.new(news_api_key)
         bbc_news_top_headlines = n.get_top_headlines(sources: "bbc-news")
-        render json: bbc_news_top_headlines.to_json()
+        first_bbc_news_headline = bbc_news_top_headlines[0]
+        render json: first_bbc_news_headline.to_json()
 
     end
 
@@ -40,7 +83,7 @@ class ApplicationController < ActionController::API
         url = 'api.openweathermap.org'
         city_name = 'London'
         country_code = 'uk'
-        
+
         req = open("http://api.openweathermap.org/data/2.5/weather?q=
             #{city_name},#{country_code}&APPID=#{weather_api_key}")
         response_body = req.read

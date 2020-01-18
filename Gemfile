@@ -58,6 +58,16 @@ gem 'news-api'
 # Use DarkSky API for real-time weather updates
 gem 'darksky_weather-api'
 
+# Use Wit.ai from Facebook as chatbot client
+gem 'wit'
+
+# # Use Google API Client library for programmatic access to Google products
+# # Read more: https://developers.google.com/api-client-library
+# gem 'google-api-client', '~> 0.34'
+
+# # Use Google Cloud API to access Dialogflow
+# gem 'google-cloud-dialogflow', '~> 0.12.0'
+
 # # Use RestClient to make external API requests
 # gem 'rest-client'
 
