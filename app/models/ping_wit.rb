@@ -32,5 +32,53 @@ response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
   http.request(request)
 end
 
-puts response.code
-puts response.body
+# response.code
+# response.body
+entities = response.body["entities"]
+
+console.log(entities)
+
+# return_highest_confidence 
+
+# if (response.code === 200) {
+#     return_highest_confidence(entities)
+# }
+
+# {
+#     "_text":"Hi there!",
+#     "entities":
+#         {
+#             "search_query":
+#                 [
+#                     {
+#                         "suggested":true,
+#                         "confidence":0.88343,
+#                         "value":"Hi",
+#                         "type":"value"
+#                     },
+#                     {
+#                         "suggested":true,
+#                         "confidence":0.85634,
+#                         "value":"!",
+#                         "type":"value"
+#                     }
+#                 ],
+#             "math_expression":
+#                 [
+#                     {
+#                         "suggested":true,
+#                         "confidence":0.92366,
+#                         "value":"there",
+#                         "type":"value"
+#                     }
+#                 ],
+#             "greetings":
+#                 [
+#                     {
+#                         "confidence":0.99992036819304,
+#                         "value":"true"
+#                     }
+#                 ]
+#         },
+#     "msg_id":"1nKN6xS2q4eueqADx"
+# }

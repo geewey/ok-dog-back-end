@@ -2,57 +2,55 @@ class ApplicationController < ActionController::API
 
     require 'news-api'
     require 'open-uri'
-    # require "google/cloud/dialogflow"
+    require "google/cloud/dialogflow"
     # require 'wit'
 
+    ### Snippet for parsing queries when passing params
+
+    def dialogflow
+        query = params[:query]
+        project_id = "ok-dog-sfhrlg"
+        session_id = "123456789"
+        language_code = "en-US"
+
+        session_client = Google::Cloud::Dialogflow::Sessions.new
+        session = session_client.class.session_path project_id, session_id
+        
+        query_input = { text: { text: query, language_code: language_code } }
+        response = session_client.detect_intent session, query_input
+        
+        # returns JSON object
+        query_result = response.query_result
+        text_to_post = { dialogflow_response: query_result.fulfillment_text }
+
+        render json: text_to_post
+    end
+
+    # def yelp
+    #     yelp = ENV["YELP_API_KEY"]
     
+    #     query = params[:query].gsub('"', '')
+    #     location = query.split('_')[0]
+    #     category = query.split('_')[1]
+    #     yelp_url = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=#{category}&location=#{location}"
+    #     res = HTTParty.get(yelp_url, :headers => {"Authorization" => "Bearer #{yelp}", "x-requested-with" => "XMLHttpRequest"})
+    #     render plain: res.body.squish
+    # end
+
     def wit
         # fetch from API
-        # q = encodeURIComponent('What is 2 + 2?');
-        # uri = 'https://api.wit.ai/message?q=' + q;
-        # auth = 'Bearer ' + ENV["WIT_API_TOKEN"];
-
-        # fetch(uri, {headers: {Authorization: auth}})
-        #     .then(res => res.json())
-        # ERROR HERE
-        #     .then(res => {render_to_page = res});
-        
         Wit.init
-
-
-        # resp = Wit.text_query('Hello!', ENV["WIT_API_TOKEN"])
-        resp = Wit.text_query('Hello!', NEP4G6G73FDM7ZXN4QLSRZISSAPKMNO2)
+        # resp = Wit.text_query('Hello!', ENV["WIT_API_TOKEN"] <-- error, temp solution is to hardcode)
         # p "Response: " + resp
-
         Wit.close
-
         # render json: render_to_page.to_json()
         render json: resp.to_json()
     end
-
-    # def google_dialogflow
-    #     dialogflow_project = ENV["DIALOGFLOW_PROJECT"]
-    #     dialogflow_credentials = ENV["DIALOGFLOW_CREDENTIALS"]
-        
-    #     client = Google::Cloud::Dialogflow::Agents.new
-        
-    #     render json: dialogflow_project.to_json()
-    # end
-
 
     def error
         error_response = {error: "Sorry, I don't understand. Please try again."}
         render json: error_response
     end
-
-    ### Snippet for parsing queries when passing params
-
-    # query = params[:query].gsub('"', '')
-    # location = query.split('_')[0]
-    # category = query.split('_')[1]
-    # news_url = "https://cors-anywhere.herokuapp.com/https://api.news.com/v3/businesses/search?term=#{category}&location=#{location}"
-    # res = HTTParty.get(yelp_url, :headers => {"Authorization" => "Bearer #{yelp}", "x-requested-with" => "XMLHttpRequest"})
-    # render plain: res.body.squish
 
     def news
         news_api_key = ENV["NEWS_API_KEY"]
