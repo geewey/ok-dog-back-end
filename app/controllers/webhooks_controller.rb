@@ -1,7 +1,6 @@
 class WebhookController < ApplicationController
   # Incoming WebHooks don't come from this web application so will not have an
   # authentication token from this web application
-  skip_before_action :verify_authenticity_token
 
   def weather_request
     webhook_envelope = JSON.parse(request.body.read)
@@ -23,6 +22,7 @@ class WebhookController < ApplicationController
     #   render json: { "error": "items Array attribute missing from body" },
     #          status: :unprocessable_entity
     # end
+    render json: webhook_envelope.to_json()
   end
-  
+
 end
