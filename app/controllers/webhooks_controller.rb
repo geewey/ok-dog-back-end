@@ -1,12 +1,26 @@
-class WebhookController < ApplicationController
+class WebhooksController < ApplicationController
   # Incoming WebHooks don't come from this web application so will not have an
   # authentication token from this web application
 
-  def weather_request
-    webhook_envelope = JSON.parse(request.body.read)
+  def webhook
+    # webhook_envelope = JSON.parse(request.body.read)
+    if request.headers['Content-Type'] == 'application/json'
+      data = JSON.parse(request.body.read)
+    else
+      # application/x-www-form-urlencoded
+      data = params.as_json
+    end
 
     # WebHook messages are sent in items.data.messages, see https://goo.gl/WT9DnH
-    puts webhook_envelope
+    # Keys: "responseID", "queryResult", "originalDetectIntentRequest", "session"
+    puts "****************"
+    # puts data
+    # puts "****************"
+    intent = data["queryResult"]["intent"]["displayName"]
+    puts intent
+    # byebug
+    puts "****************"
+
 
     # if webhook_envelope["items"] && webhook_envelope["items"].kind_of?(Array)
     #   webhook_envelope["items"].each do |item|
@@ -22,7 +36,16 @@ class WebhookController < ApplicationController
     #   render json: { "error": "items Array attribute missing from body" },
     #          status: :unprocessable_entity
     # end
-    render json: webhook_envelope.to_json()
+
+    # render json: webhook_envelope
+
+    resp = { fulfillment_messages: ["weather WEATHER weather YAY."] }
+    if intent == "weather"
+      render json: resp.to_json()
+    else
+      Webhook::Received.save(data: data, integration: params[:integration_name])
+      render nothing: true
+    end
   end
 
 end

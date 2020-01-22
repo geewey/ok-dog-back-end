@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   # post 'weather_post', to: 'application#weather_post'
-  post '/webhooks/weather' => 'webhooks#weather_request', format: :json
+  post '/webhooks' => 'webhooks#webhook', format: :json
   
   get 'dialogflow/:query', to: 'application#dialogflow'
   
   # get 'news/:query', to: 'application#news'
   get 'news', to: 'application#news'
   get 'joke', to: 'application#joke'
-  get 'weather', to: 'application#weather_get'
+  get 'weather', to: 'application#weather'
   get 'error', to: 'application#error'
   
   # get 'google_dialogflow', to: 'application#google_dialogflow'
