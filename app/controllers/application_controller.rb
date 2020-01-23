@@ -18,10 +18,13 @@ class ApplicationController < ActionController::API
     
     query_input = { text: { text: query, language_code: language_code } }
     response = session_client.detect_intent session, query_input
-    # debugger
+    
     # returns JSON object
     query_result = response.query_result
-    text_to_post = { "fulfillmentText": query_result.fulfillment_text }
+
+    default_response = "Sorry! That's beyond me. Try asking me the news, weather, or a joke!"
+
+    query_result.fulfillment_text == "" ? text_to_post = { "fulfillmentText": default_response } : text_to_post = { "fulfillmentText": query_result.fulfillment_text }
 
     puts text_to_post
     render json: text_to_post
