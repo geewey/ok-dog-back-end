@@ -18,12 +18,12 @@ class ApplicationController < ActionController::API
     
     query_input = { text: { text: query, language_code: language_code } }
     response = session_client.detect_intent session, query_input
-    
+    # debugger
     # returns JSON object
     query_result = response.query_result
-    # puts query_result
-    text_to_post = { dialogflow_response: query_result.fulfillment_text }
+    text_to_post = { "fulfillmentText": query_result.fulfillment_text }
 
+    puts text_to_post
     render json: text_to_post
   end
 
@@ -60,7 +60,6 @@ class ApplicationController < ActionController::API
     bbc_news_top_headlines = n.get_top_headlines(sources: "bbc-news")
     first_bbc_news_headline = bbc_news_top_headlines[0]
     render json: first_bbc_news_headline.to_json()
-
   end
 
   def joke
@@ -82,8 +81,6 @@ class ApplicationController < ActionController::API
     url = 'api.openweathermap.org'
     city_name = 'London'
     country_code = 'uk'
-    byebug
-
     req = open("http://api.openweathermap.org/data/2.5/weather?q=
       #{city_name},#{country_code}&APPID=#{weather_api_key}")
     response_body = req.read
