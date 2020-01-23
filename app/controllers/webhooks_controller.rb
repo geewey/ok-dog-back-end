@@ -32,21 +32,35 @@ class WebhooksController < ApplicationController
       weather_api_key = ENV["WEATHER_API_KEY"]
 
       # url = 'api.openweathermap.org'
-      inputted_city = data["queryResult"]["parameters"]["address"]["city"].downcase
       default_city = 'london'
-      city = default_city == inputted_city ? default_city.titleize : inputted_city.titleize
+      puts "***********"
+      puts "city input is nil?"
+      puts data["queryResult"]["parameters"]["address"]["city"] == nil
+      puts "***********"
+      puts "default city: #{default_city}"
+      puts "default city matches city input?"
+      puts default_city == data["queryResult"]["parameters"]["address"]["city"].to_s.downcase
+      puts "***********"
+      if data["queryResult"]["parameters"]["address"]["city"] == nil
+        city = default_city
+      else 
+        city = data["queryResult"]["parameters"]["address"]["city"].to_s
+      end
 
       default_country_code = 'uk'
+      
       req = JSON.parse(open("http://api.openweathermap.org/data/2.5/weather?q=
       #{city}&APPID=#{weather_api_key}").string)
       
       temp_kelvin = req["main"]["temp"]
       temp_celsius = (temp_kelvin - 273.15).round(1).to_s
       weather_description = req["weather"][0]["description"]
-
+      city = city.split.map(&:capitalize).join(' ')
+      
       # debugger
       weather_resp = { "fulfillmentText": "The weather in #{city} is currently #{temp_celsius} degrees Celsius, with #{weather_description} expected."}
-      render json: weather_resp
+      puts weather_resp
+      render json: weather_resp.to_json()
     else
       render json: default_response
     end

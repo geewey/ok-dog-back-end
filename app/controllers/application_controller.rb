@@ -17,6 +17,7 @@ class ApplicationController < ActionController::API
     session = session_client.class.session_path project_id, session_id
     
     query_input = { text: { text: query, language_code: language_code } }
+    
     response = session_client.detect_intent session, query_input
     
     # returns JSON object
