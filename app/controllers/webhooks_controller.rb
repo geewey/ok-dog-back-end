@@ -10,9 +10,9 @@ class WebhooksController < ApplicationController
       data = params.as_json
     end
     
-    # data (hash) has keys: ["responseID", "queryResult", "originalDetectIntentRequest", "session"]
-    # queryResult (hash) has keys: ["queryText", "action", "parameters", "allRequiredParamsPresent", "fulfillmentMessages", "outputContexts", "intent", "intentDetectionConfidence", "languageCode"]
-    # req, resp documentation here: https://cloud.google.com/dialogflow/docs/fulfillment-how
+    ## data (hash) has keys: ["responseID", "queryResult", "originalDetectIntentRequest", "session"]
+    ## queryResult (hash) has keys: ["queryText", "action", "parameters", "allRequiredParamsPresent", "fulfillmentMessages", "outputContexts", "intent", "intentDetectionConfidence", "languageCode"]
+    ## req, resp documentation here: https://cloud.google.com/dialogflow/docs/fulfillment-how
     
     # puts "****************"
     intent = data["queryResult"]["intent"]["displayName"]
@@ -33,14 +33,6 @@ class WebhooksController < ApplicationController
 
       # url = 'api.openweathermap.org'
       default_city = 'london'
-      puts "***********"
-      puts "city input is nil?"
-      puts data["queryResult"]["parameters"]["address"]["city"] == nil
-      puts "***********"
-      puts "default city: #{default_city}"
-      puts "default city matches city input?"
-      puts default_city == data["queryResult"]["parameters"]["address"]["city"].to_s.downcase
-      puts "***********"
       if data["queryResult"]["parameters"]["address"]["city"] == nil
         city = default_city
       else 
