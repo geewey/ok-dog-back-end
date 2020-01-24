@@ -62,8 +62,8 @@ class ApplicationController < ActionController::API
     
     n = News.new(news_api_key)
     bbc_news_top_headlines = n.get_top_headlines(sources: "bbc-news")
-    first_bbc_news_headline = bbc_news_top_headlines[0]
-    render json: first_bbc_news_headline.to_json()
+    random_bbc_news_headline = bbc_news_top_headlines.sample
+    render json: random_bbc_news_headline.to_json()
   end
 
   def joke
