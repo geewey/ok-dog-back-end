@@ -42,15 +42,15 @@ class ApplicationController < ActionController::API
     # render plain: res.body.squish
   # end
 
-  def wit
-    # fetch from API
-    Wit.init
-    # resp = Wit.text_query('Hello!', ENV["WIT_API_TOKEN"] <-- error, temp solution is to hardcode)
-    # p "Response: " + resp
-    Wit.close
-    # render json: render_to_page.to_json()
-    render json: resp.to_json()
-  end
+  # def wit
+  #   # fetch from API
+  #   Wit.init
+  #   # resp = Wit.text_query('Hello!', ENV["WIT_API_TOKEN"] <-- error, temp solution is to hardcode)
+  #   # p "Response: " + resp
+  #   Wit.close
+  #   # render json: render_to_page.to_json()
+  #   render json: resp.to_json()
+  # end
 
   def error
     error_response = {error: "Sorry, I don't understand. Please try again."}
